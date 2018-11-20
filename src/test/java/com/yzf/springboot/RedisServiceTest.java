@@ -1,7 +1,7 @@
 package com.yzf.springboot;
 
-import com.yzf.springboot.utils.RedisUtil;
-import com.yzf.springboot.utils.SpringUtil;
+import com.yzf.springboot.util.RedisUtil;
+import com.yzf.springboot.util.MySpringUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,9 +38,9 @@ public class RedisServiceTest {
 
     @Test
     public void TestRedisBean() {
-        ApplicationContext context = SpringUtil.getApplicationContext();
-        RedisTemplate redisTemplate = SpringUtil.getBean("redisTemplate", RedisTemplate.class);
-        RedisTemplate StringRedisTemplate = SpringUtil.getBean("stringRedisTemplate", StringRedisTemplate.class);
+        ApplicationContext context = MySpringUtil.getApplicationContext();
+        RedisTemplate redisTemplate = MySpringUtil.getBean("redisTemplate", RedisTemplate.class);
+        RedisTemplate StringRedisTemplate = MySpringUtil.getBean("stringRedisTemplate", StringRedisTemplate.class);
     }
 
 }

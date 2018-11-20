@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yzf.springboot.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.yzf.springboot.pojo.entity.User">
-        <id column="id" property="id" jdbcType="VARCHAR"/>
+<mapper namespace="com.yzf.springboot.mapper.LinkmanMapper">
+    <resultMap id="BaseResultMap" type="com.yzf.springboot.pojo.entity.Linkman">
+        <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="birth" property="birth" jdbcType="VARCHAR"/>
         <result column="id_card" property="idCard" jdbcType="VARCHAR"/>
@@ -12,9 +12,12 @@
         <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
         <result column="company" property="company" jdbcType="VARCHAR"/>
-        <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="ext1" property="ext1" jdbcType="VARCHAR"/>
+        <result column="ext2" property="ext2" jdbcType="VARCHAR"/>
+        <result column="ext3" property="ext3" jdbcType="VARCHAR"/>
+        <result column="uid" property="uid" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -27,13 +30,16 @@
         mobile,
         address,
         company,
-        pwd,
         create_time,
-        update_time
+        update_time,
+        ext1,
+        ext2,
+        ext3,
+        uid
     </sql>
 
-    <insert id="insertUser" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO user (
+    <insert id="insertLinkman" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO linkman (
             name,
             birth,
             id_card,
@@ -42,8 +48,11 @@
             mobile,
             address,
             company,
-            pwd,
-            create_time
+            create_time,
+            ext1,
+            ext2,
+            ext3,
+            uid
         ) VALUES (
             #{name,jdbcType = VARCHAR},
             #{birth,jdbcType = VARCHAR},
@@ -53,13 +62,16 @@
             #{mobile,jdbcType = VARCHAR},
             #{address,jdbcType = VARCHAR},
             #{company,jdbcType = VARCHAR},
-            #{pwd,jdbcType = VARCHAR},
-            now()
+            now(),
+            #{ext1,jdbcType = VARCHAR},
+            #{ext2,jdbcType = VARCHAR},
+            #{ext3,jdbcType = VARCHAR},
+            #{uid,jdbcType = VARCHAR}
         )
     </insert>
 
-    <update id="updateUser">
-        UPDATE user
+    <update id="updateLinkman">
+        UPDATE linkman
         <set>
             name = #{name,jdbcType = VARCHAR},
             birth = #{birth,jdbcType = VARCHAR},
@@ -69,46 +81,57 @@
             mobile = #{mobile,jdbcType = VARCHAR},
             address = #{address,jdbcType = VARCHAR},
             company = #{company,jdbcType = VARCHAR},
-            pwd = #{pwd,jdbcType = VARCHAR},
-            update_time = now()
+            update_time = now(),
+            ext1 = #{ext1,jdbcType = VARCHAR},
+            ext2 = #{ext2,jdbcType = VARCHAR},
+            ext3 = #{ext3,jdbcType = VARCHAR}
         </set>
         <where>
-            id = #{id,jdbcType = VARCHAR}
+            and id = #{id,jdbcType = VARCHAR}
+            and uid = #{uid,jdbcType = VARCHAR}
         </where>
     </update>
 
-    <delete id="batchDeleteUser">
+    <delete id="batchDeleteLinkman">
 
     </delete>
 
-    <delete id="deleteUser">
-        DELETE FROM user
+    <delete id="deleteLinkman">
+        DELETE FROM linkman
         <where>
-            id = #{id,jdbcType = VARCHAR}
+            and id = #{id,jdbcType = VARCHAR}
+            and uid = #{uid,jdbcType = VARCHAR}
         </where>
     </delete>
 
     <select id="getList" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from user
+        from linkman
     </select>
 
     <select id="getOne" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from user
+        from linkman
         <where>
             <if test="code != null and code != ''">
                 code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="id != null and id != ''" >
+                id = #{id,jdbcType=VARCHAR}
             </if>
         </where>
         limit 1
     </select>
 
-    <select id="getUserList" resultMap="BaseResultMap">
+    <select id="getLinkmanList" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from user
+        from linkman
+        <where>
+            uid = #{uid,jdbcType=VARCHAR}
+        </where>
+        order by create_time desc
     </select>
 </mapper>

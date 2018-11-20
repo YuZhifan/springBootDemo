@@ -20,7 +20,7 @@ public interface UserService {
 
     Boolean matchPwd(String inputPwd, String realPwd);
 
-    String getToken(String account, String pwd);
+    String getToken(String id, String code) throws Exception;
 
-    void saveUserTokenToRedis(String account, String token);
+    void saveUserTokenToRedis(String code, String token);
 }

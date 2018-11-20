@@ -29,9 +29,4 @@ public class HiController {
 //        return new ResultObject();
     }
 
-    @RequestMapping("/hi2")
-    public Object sayHi2(String name,String key) throws Exception {
-        System.out.println(name);
-        return name;
-    }
 }

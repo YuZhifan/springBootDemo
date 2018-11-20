@@ -18,7 +18,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.xa.DruidXADataSource
     name: jiawei
-    url: jdbc:mysql://127.0.0.1:3307/jiawei?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=true
+    url: jdbc:mysql://127.0.0.1:3306/jiawei?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=true
     username: root
     password: root
     # 下面为连接池的补充设置，应用到上面所有数据源中

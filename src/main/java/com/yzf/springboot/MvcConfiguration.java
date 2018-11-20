@@ -68,7 +68,7 @@ public class MvcConfiguration extends WebMvcConfigurationSupport {
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setCharset(Charset.forName("UTF-8"));
         //fastJsonConfig.setFeatures(Feature.AllowISO8601DateFormat, Feature.InitStringFieldAsEmpty);
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
+//        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
         fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
         fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
         return fastJsonHttpMessageConverter;

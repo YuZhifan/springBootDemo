@@ -1,14 +1,21 @@
 package com.yzf.springboot.admin.interceptror;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yzf.springboot.constant.Constant;
 import com.yzf.springboot.pojo.dto.ResultObject;
-import com.yzf.springboot.utils.RedisUtil;
+import com.yzf.springboot.util.AESUtil;
+import com.yzf.springboot.util.JWTUtil;
+import com.yzf.springboot.util.LoginUserHelper;
+import com.yzf.springboot.util.RedisUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -25,7 +32,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
         logger.debug("preHandle");
         logger.debug("request servlet path:" + JSONObject.toJSONString(currentUrl));
         logger.debug("request params:" + JSONObject.toJSONString(params));
-        if (currentUrl.indexOf("login") >= 0)
+        if (currentUrl.indexOf("/login") >= 0 || currentUrl.indexOf("/user/add") >= 0)
             return super.preHandle(request, response, handler);
         if (isUserLogin(request.getHeader("token"))) {
             return super.preHandle(request, response, handler);
@@ -54,14 +61,18 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
         logger.debug("afterConcurrentHandlingStarted");
     }
 
-    private Boolean isUserLogin(String token) {
+    private Boolean isUserLogin(String token) throws Exception {
         if (null != token && token.contains("#")) {
-            String name = token.split("#")[0];
-            if (null != name && name.length() > 0) {
-                String redisToken = RedisUtil.get("USER_" + name, "token");
+            String[] tokenArray = token.split("#");
+            String code = token.split("#")[0];
+            if (null != code && code.length() > 0) {
+                String redisToken = RedisUtil.get("USER_" + code, "token");
                 if (token.equals(redisToken)) {
-                    RedisUtil.expire("USER_" + name, 1800, TimeUnit.SECONDS);
-                    return true;
+                    String AWTCode = LoginUserHelper.getUserCodeByParseJWT(tokenArray[1]);
+                    if (code.equals(AWTCode)) {
+                        RedisUtil.expire("USER_" + code, 1800, TimeUnit.SECONDS);
+                        return true;
+                    }
                 }
             }
         }

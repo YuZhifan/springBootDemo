@@ -13,7 +13,7 @@ public class BaseController {
     }
 
     protected ResultObject renderSuccess(Object obj) {
-        return renderSuccess(obj, null);
+        return renderSuccess(obj, "操作成功");
     }
 
 

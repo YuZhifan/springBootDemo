@@ -1,20 +1,19 @@
-package com.yzf.springboot.utils;
+package com.yzf.springboot.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 @Configuration
-public class SpringUtil implements ApplicationContextAware {
+public class MySpringUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        if(SpringUtil.applicationContext == null) {
-            SpringUtil.applicationContext = applicationContext;
+        if(MySpringUtil.applicationContext == null) {
+            MySpringUtil.applicationContext = applicationContext;
         }
     }
 

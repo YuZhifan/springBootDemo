@@ -1,17 +1,23 @@
 package com.yzf.springboot.service.impl;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.yzf.springboot.mapper.UserMapper;
 import com.yzf.springboot.pojo.entity.User;
 import com.yzf.springboot.service.UserService;
-import com.yzf.springboot.utils.RedisUtil;
+import com.yzf.springboot.util.AESUtil;
+import com.yzf.springboot.util.JWTUtil;
+import com.yzf.springboot.util.RedisUtil;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -58,18 +64,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getToken(String account, String pwd) {
-        return account + "#" + JWT.create().withIssuer(account)
-                .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1800))
-                .withClaim("account", account)
-                .sign(Algorithm.HMAC256(pwd));
+    public String getToken(String id, String code) throws Exception {
+        return code + "#" + JWTUtil.createJWT(id, code, 1800000);
     }
 
+
     @Override
-    public void saveUserTokenToRedis(String account, String token) {
-        RedisUtil.put("USER_" + account, "token", token);
-        RedisUtil.expire("USER_" + account, 1800, TimeUnit.SECONDS);
+    public void saveUserTokenToRedis(String code, String token) {
+        RedisUtil.put("USER_" + code, "token", token);
+        RedisUtil.expire("USER_" + code, 1800, TimeUnit.SECONDS);
     }
+
+
 
 }

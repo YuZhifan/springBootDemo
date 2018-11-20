@@ -1,11 +1,8 @@
-package com.yzf.springboot.utils;
+package com.yzf.springboot.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 
-import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +19,7 @@ public class RedisUtil {
     //    @Autowired
 //    @Qualifier("redisTemplate")
 //    @Resource
-    private static RedisTemplate<Object, Object> redisTemplate = SpringUtil.getBean("redisTemplate", RedisTemplate.class);
+    private static RedisTemplate<Object, Object> redisTemplate = MySpringUtil.getBean("redisTemplate", RedisTemplate.class);
 
     public static RedisTemplate<Object, Object> getInstance() {
         return redisTemplate;
