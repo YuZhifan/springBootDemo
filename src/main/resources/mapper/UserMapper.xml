@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzf.springboot.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.yzf.springboot.pojo.entity.User">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="birth" property="birth" jdbcType="VARCHAR"/>
+        <result column="id_card" property="idCard" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="company" property="company" jdbcType="VARCHAR"/>
+        <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        name,
+        birth,
+        id_card,
+        code,
+        email,
+        mobile,
+        address,
+        company,
+        pwd,
+        create_time,
+        update_time
+    </sql>
+
+    <insert id="insertUser" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO user (
+            name,
+            birth,
+            id_card,
+            code,
+            email,
+            mobile,
+            address,
+            company,
+            pwd,
+            create_time
+        ) VALUES (
+            #{name,jdbcType = VARCHAR},
+            #{birth,jdbcType = VARCHAR},
+            #{idCard,jdbcType = VARCHAR},
+            #{code,jdbcType = VARCHAR},
+            #{email,jdbcType = VARCHAR},
+            #{mobile,jdbcType = VARCHAR},
+            #{address,jdbcType = VARCHAR},
+            #{company,jdbcType = VARCHAR},
+            #{pwd,jdbcType = VARCHAR},
+            now()
+        )
+    </insert>
+
+    <update id="updateUser">
+        UPDATE user
+        <set>
+            name = #{name,jdbcType = VARCHAR},
+            birth = #{birth,jdbcType = VARCHAR},
+            id_card = #{idCard,jdbcType = VARCHAR},
+            code = #{code,jdbcType = VARCHAR},
+            email = #{email,jdbcType = VARCHAR},
+            mobile = #{mobile,jdbcType = VARCHAR},
+            address = #{address,jdbcType = VARCHAR},
+            company = #{company,jdbcType = VARCHAR},
+            pwd = #{pwd,jdbcType = VARCHAR},
+            update_time = now()
+        </set>
+        <where>
+            id = #{id,jdbcType = VARCHAR}
+        </where>
+    </update>
+
+    <delete id="batchDeleteUser">
+
+    </delete>
+
+    <delete id="deleteUser">
+        DELETE FROM user
+        <where>
+            id = #{id,jdbcType = VARCHAR}
+        </where>
+    </delete>
+
+    <select id="getList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from user
+    </select>
+
+    <select id="getOne" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from user
+        <where>
+            <if test="code != null and code != ''">
+                code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null and type != ''" >
+                type = #{type,jdbcType=VARCHAR}
+            </if>
+        </where>
+        limit 1
+    </select>
+
+    <select id="getUserList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from user
+    </select>
+</mapper>

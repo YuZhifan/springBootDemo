@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    active: sit
+#mybatis配置
+mybatis:
+  type-aliases-package: com.yzf.springboot.pojo.entity
+  mapper-locations: classpath:mapper/*Mapper.xml
+mapper:
+  mappers: com.yzf.springboot.mapper
+  not-empty: false
+  identity: MYSQL
+#pagehelper
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count,countSql
+#server
+server:
+  servlet:
+      context-path: /
+  port: 8080
+  timeout: 10000
+  
