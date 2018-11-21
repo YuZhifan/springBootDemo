@@ -3,12 +3,19 @@ package com.yzf.springboot.controller;
 import com.yzf.springboot.admin.exception.BizException;
 import com.yzf.springboot.pojo.entity.User;
 import com.yzf.springboot.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
+@Api(description = "用户相关")
 @RequestMapping(value = "/user")
 @RestController
 public class UserController extends BaseController {
@@ -16,12 +23,17 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/list")
+    @ApiIgnore()
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
     public Object list(User user) {
         return renderSuccess(userService.getUserList(user));
     }
 
-    @RequestMapping(value = "/add")
+    @ApiOperation(value = "注册")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "user", value = "{\"code\":\"\",\"name\":\"\",\"pwd\":\"\"}")
+    })
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object add(@RequestBody User user) throws BizException {
         if (StringUtils.isBlank(user.getCode())) {
             throw new BizException("F000", "param[code] is need");
@@ -38,7 +50,8 @@ public class UserController extends BaseController {
         return renderSuccess(userService.insertUser(user));
     }
 
-    @RequestMapping(value = "/delete")
+    @ApiIgnore()
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public Object delete(String id) throws BizException {
         if (StringUtils.isBlank(id)) {
             throw new BizException("F000", "param[id] is need");
@@ -46,7 +59,8 @@ public class UserController extends BaseController {
         return renderSuccess(userService.deleteUser(id));
     }
 
-    @RequestMapping(value = "/update")
+    @ApiIgnore()
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Object update(User user) throws BizException {
         if (StringUtils.isBlank(user.getId())) {
             throw new BizException("F000", "param[id] is need");

@@ -39,7 +39,7 @@ public class JWTUtil {
                 .setIssuedAt(now)           //iat: jwt的签发时间
                 .setSubject(subject)        //sub(Subject)：代表这个JWT的主体，即它的所有人，这个是一个json格式的字符串，可以存放什么userid，roldid之类的，作为什么用户的唯一标志。
                 .signWith(signatureAlgorithm, key);//设置签名使用的签名算法和签名使用的秘钥
-        if (ttlMillis >= 0) {
+        if (ttlMillis >= 0) {       //此处的过期时间不会对应redis缓存过期时间 要注意
             long expMillis = nowMillis + ttlMillis;
             Date exp = new Date(expMillis);
             builder.setExpiration(exp);     //设置过期时间

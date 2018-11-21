@@ -1,10 +1,12 @@
 package com.yzf.springboot.service.impl;
 
 import com.yzf.springboot.mapper.LinkmanMapper;
+import com.yzf.springboot.pojo.dto.LinkmanDTO;
 import com.yzf.springboot.pojo.entity.Linkman;
 import com.yzf.springboot.service.LinkmanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,8 +38,9 @@ public class LinkmanServiceImpl implements LinkmanService {
     }
 
     @Override
-    public Boolean batchDeleteLinkman(List<String> id) {
-        return null;
+    @Transactional
+    public Boolean batchDeleteLinkman(LinkmanDTO linkman) {
+        return linkmanMapper.batchDeleteLinkman(linkman);
     }
 
     @Override

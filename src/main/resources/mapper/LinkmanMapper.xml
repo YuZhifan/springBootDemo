@@ -18,6 +18,8 @@
         <result column="ext2" property="ext2" jdbcType="VARCHAR"/>
         <result column="ext3" property="ext3" jdbcType="VARCHAR"/>
         <result column="uid" property="uid" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="qq" property="qq" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -35,7 +37,9 @@
         ext1,
         ext2,
         ext3,
-        uid
+        uid,
+        phone,
+        qq
     </sql>
 
     <insert id="insertLinkman" keyProperty="id" useGeneratedKeys="true">
@@ -52,7 +56,9 @@
             ext1,
             ext2,
             ext3,
-            uid
+            uid,
+            phone,
+            qq
         ) VALUES (
             #{name,jdbcType = VARCHAR},
             #{birth,jdbcType = VARCHAR},
@@ -66,7 +72,9 @@
             #{ext1,jdbcType = VARCHAR},
             #{ext2,jdbcType = VARCHAR},
             #{ext3,jdbcType = VARCHAR},
-            #{uid,jdbcType = VARCHAR}
+            #{uid,jdbcType = VARCHAR},
+            #{phone,jdbcType = VARCHAR},
+            #{qq,jdbcType = VARCHAR}
         )
     </insert>
 
@@ -84,7 +92,9 @@
             update_time = now(),
             ext1 = #{ext1,jdbcType = VARCHAR},
             ext2 = #{ext2,jdbcType = VARCHAR},
-            ext3 = #{ext3,jdbcType = VARCHAR}
+            ext3 = #{ext3,jdbcType = VARCHAR},
+            phone = #{phone,jdbcType = VARCHAR},
+            qq = #{qq,jdbcType = VARCHAR}
         </set>
         <where>
             and id = #{id,jdbcType = VARCHAR}
@@ -93,7 +103,13 @@
     </update>
 
     <delete id="batchDeleteLinkman">
-
+        DELETE FROM linkman
+        <where>
+            and uid = #{uid,jdbcType = VARCHAR}
+            <foreach collection="idList" index="index" item="item" open="and id in (" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
     </delete>
 
     <delete id="deleteLinkman">
@@ -115,11 +131,12 @@
         <include refid="Base_Column_List"/>
         from linkman
         <where>
+            and uid = #{uid,jdbcType=VARCHAR}
             <if test="code != null and code != ''">
-                code = #{code,jdbcType=VARCHAR}
+                and code = #{code,jdbcType=VARCHAR}
             </if>
-            <if test="id != null and id != ''" >
-                id = #{id,jdbcType=VARCHAR}
+            <if test="id != null and id != ''">
+                and id = #{id,jdbcType=VARCHAR}
             </if>
         </where>
         limit 1
@@ -130,7 +147,10 @@
         <include refid="Base_Column_List"/>
         from linkman
         <where>
-            uid = #{uid,jdbcType=VARCHAR}
+            and uid = #{uid,jdbcType=VARCHAR}
+            <if test="name != null and name != ''">
+                and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+            </if>
         </where>
         order by create_time desc
     </select>

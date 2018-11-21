@@ -1,5 +1,6 @@
 package com.yzf.springboot.util;
 
+import com.yzf.springboot.constant.Constant;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
 
@@ -53,5 +54,15 @@ public class LoginUserHelper {
         }
         String[] tokenArray = token.split("#");
         return getUserIdByParseJWT(tokenArray[1]);
+    }
+
+    /**
+     *
+     */
+    public static Boolean cleanLoginUserSession(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        String[] tokenArray = token.split("#");
+        RedisUtil.delete(Constant.REDIS_USER_PRE  + tokenArray[0]);
+        return true;
     }
 }

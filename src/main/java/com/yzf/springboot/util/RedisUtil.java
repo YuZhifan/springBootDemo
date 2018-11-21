@@ -190,7 +190,7 @@ public class RedisUtil {
      * @param key
      * @return
      */
-    public boolean delete(String key) {
+    public static boolean delete(String key) {
         return redisTemplate.delete(key);
     }
 
@@ -238,7 +238,7 @@ public class RedisUtil {
      * @param hashKeys
      * @return 删除成功的 数量
      */
-    public Long delete(String key, String... hashKeys) {
+    public static Long delete(String key, String... hashKeys) {
         return redisTemplate.opsForHash().delete(key, hashKeys);
     }
 

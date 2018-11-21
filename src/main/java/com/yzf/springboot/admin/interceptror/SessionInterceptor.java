@@ -3,19 +3,14 @@ package com.yzf.springboot.admin.interceptror;
 import com.alibaba.fastjson.JSONObject;
 import com.yzf.springboot.constant.Constant;
 import com.yzf.springboot.pojo.dto.ResultObject;
-import com.yzf.springboot.util.AESUtil;
-import com.yzf.springboot.util.JWTUtil;
 import com.yzf.springboot.util.LoginUserHelper;
 import com.yzf.springboot.util.RedisUtil;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -41,7 +36,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
         response.setContentType("application/json; charset=utf-8");
         ResultObject result = new ResultObject();
         result.setReturnCode("F000");
-        result.setReturnMsg("登录超时");
+        result.setReturnDesc("登录超时");
         response.getWriter().write(JSONObject.toJSONString(result));
         return false;
     }
@@ -66,11 +61,11 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
             String[] tokenArray = token.split("#");
             String code = token.split("#")[0];
             if (null != code && code.length() > 0) {
-                String redisToken = RedisUtil.get("USER_" + code, "token");
+                String redisToken = RedisUtil.get(Constant.REDIS_USER_PRE + code, "token");
                 if (token.equals(redisToken)) {
                     String AWTCode = LoginUserHelper.getUserCodeByParseJWT(tokenArray[1]);
                     if (code.equals(AWTCode)) {
-                        RedisUtil.expire("USER_" + code, 1800, TimeUnit.SECONDS);
+                        RedisUtil.expire(Constant.REDIS_USER_PRE + code, 1800, TimeUnit.SECONDS);
                         return true;
                     }
                 }

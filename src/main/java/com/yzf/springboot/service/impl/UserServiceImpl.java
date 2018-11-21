@@ -1,5 +1,6 @@
 package com.yzf.springboot.service.impl;
 
+import com.yzf.springboot.constant.Constant;
 import com.yzf.springboot.mapper.UserMapper;
 import com.yzf.springboot.pojo.entity.User;
 import com.yzf.springboot.service.UserService;
@@ -60,19 +61,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean matchPwd(String inputPwd, String realPwd) {
-        return inputPwd.endsWith(realPwd) ? true : false;
+        return inputPwd.equals(realPwd) ? true : false;
     }
 
     @Override
     public String getToken(String id, String code) throws Exception {
-        return code + "#" + JWTUtil.createJWT(id, code, 1800000);
+        return code + "#" + JWTUtil.createJWT(id, code, 18000000);
     }
 
 
     @Override
     public void saveUserTokenToRedis(String code, String token) {
-        RedisUtil.put("USER_" + code, "token", token);
-        RedisUtil.expire("USER_" + code, 1800, TimeUnit.SECONDS);
+        RedisUtil.put(Constant.REDIS_USER_PRE  + code, "token", token);
+        RedisUtil.expire(Constant.REDIS_USER_PRE  + code, 1800, TimeUnit.SECONDS);
     }
 
 

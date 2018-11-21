@@ -73,28 +73,17 @@ public class RedisConfig extends CachingConfigurerSupport {
 		ObjectMapper om = new ObjectMapper();
 		om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
 		om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-		Jackson2JsonRedisSerializer jackson2JsonRedisSerializer1 = new Jackson2JsonRedisSerializer(Object.class);
-		jackson2JsonRedisSerializer1.setObjectMapper(om);
+		Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+		jackson2JsonRedisSerializer.setObjectMapper(om);
 
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 //		GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer();
 		redisTemplate.setConnectionFactory(factory);
-		redisTemplate.setValueSerializer(jackson2JsonRedisSerializer1);
+		redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
 //		redisTemplate.setValueSerializer(new StringRedisSerializer());
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
 		redisTemplate.afterPropertiesSet();
-
-
-
-
-//        template.setConnectionFactory(factory);
-        //key序列化方式
-//        template.setKeySerializer(redisSerializer);
-        //value序列化
-//        template.setValueSerializer(jackson2JsonRedisSerializer );
-        //value hashmap序列化
-//        template.setHashValueSerializer(jackson2JsonRedisSerializer );
 
         return redisTemplate;
     }

@@ -1,6 +1,7 @@
 package com.yzf.springboot.service;
 
 
+import com.yzf.springboot.pojo.dto.LinkmanDTO;
 import com.yzf.springboot.pojo.entity.Linkman;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface LinkmanService {
 
     Boolean deleteLinkman(Linkman linkman);
 
-    Boolean batchDeleteLinkman(List<String> id);
+    Boolean batchDeleteLinkman(LinkmanDTO linkman);
 
     Integer insertLinkman(Linkman linkman);
 

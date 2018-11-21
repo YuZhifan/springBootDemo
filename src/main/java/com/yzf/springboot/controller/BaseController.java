@@ -24,11 +24,11 @@ public class BaseController {
     protected ResultObject renderFail(String msg) {
         ResultObject result = new ResultObject();
         result.setReturnCode("F000");
-        result.setReturnMsg(msg);
+        result.setReturnDesc(msg);
         return result;
     }
 
     protected ResultObject renderFail() {
-        return renderFail(null);
+        return renderFail("操作失败");
     }
 }

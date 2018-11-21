@@ -1,7 +1,7 @@
 package com.yzf.springboot;
 
-import com.yzf.springboot.util.RedisUtil;
 import com.yzf.springboot.util.MySpringUtil;
+import com.yzf.springboot.util.RedisUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +34,12 @@ public class RedisServiceTest {
         redisUtil.getInstance().opsForHash().put("key", "field3", map);
         Map obj = (Map) redisUtil.getInstance().boundHashOps("key").get("field");
         System.out.println(map.get("key"));
+    }
+
+    @Test
+    public void TestRedisDelete() {
+        String key = "USER_yuzhifan";
+        System.out.println(RedisUtil.delete(key));
     }
 
     @Test

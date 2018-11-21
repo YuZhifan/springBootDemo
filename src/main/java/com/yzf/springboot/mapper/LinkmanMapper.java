@@ -1,5 +1,6 @@
 package com.yzf.springboot.mapper;
 
+import com.yzf.springboot.pojo.dto.LinkmanDTO;
 import com.yzf.springboot.pojo.entity.Linkman;
 import com.yzf.springboot.pojo.entity.User;
 
@@ -19,5 +20,5 @@ public interface LinkmanMapper {
 
     Integer insertLinkman(Linkman linkman);
 
-    Boolean batchDeleteLinkman(List<String> id);
+    Boolean batchDeleteLinkman(LinkmanDTO linkman);
 }

@@ -2,6 +2,7 @@ package com.yzf.springboot.admin.exception;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yzf.springboot.pojo.dto.ResultObject;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -31,10 +32,13 @@ public class CommonExceptionHandler implements HandlerExceptionResolver {
         try {
             if (ex instanceof BizException) {
                 result.setReturnCode(((BizException) ex).getCode());
-                result.setReturnMsg(((BizException) ex).getMsg());
+                result.setReturnDesc(((BizException) ex).getMsg());
+            } else if (ex instanceof ExpiredJwtException) {
+                result.setReturnCode("F000");
+                result.setReturnDesc("登录超时");
             } else {
                 result.setReturnCode("E000");
-                result.setReturnMsg(ex.getStackTrace().toString());
+                result.setReturnDesc(ex.getMessage());
             }
             // 设置json头
             response.setContentType("application/json; charset=UTF-8");
