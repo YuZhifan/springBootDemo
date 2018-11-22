@@ -85,15 +85,6 @@ public class MvcConfiguration extends WebMvcConfigurationSupport {
         return stringHttpMessageConverter;
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowCredentials(true)
-                .allowedMethods("GET", "POST", "DELETE", "PUT")
-                .maxAge(3600);
-    }
-
     /**
      * 发现如果继承了WebMvcConfigurationSupport，则在yml中配置的相关内容会失效。 需要重新指定静态资源
      *
