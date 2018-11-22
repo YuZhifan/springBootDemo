@@ -14,6 +14,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ImportResource(value = {
         "classpath:spring.xml"
 })
+
+/*
+@MapperScan仅扫描业务接口包，不能扫描本地通用Mapper接口包，
+  否则报java.lang.ClassCastException: sun.reflect.generics.reflectiveObjects.TypeVariableImpl
+        cannot be cast to java.lang.Class异常
+*/
 public class Application {
 
     public static void main(String[] args) {

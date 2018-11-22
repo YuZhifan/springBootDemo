@@ -18,7 +18,7 @@ public class HiController {
     @Autowired
     private HiService hiService;
 
-    @RequestMapping(value = "/hi", method = RequestMethod.POST)
+    @RequestMapping(value = "/hi")
     public Object sayHi() throws Exception {
         ResultObject result = new ResultObject();
         System.out.println("HiController.sayHi");

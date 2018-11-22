@@ -152,6 +152,6 @@
                 and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
             </if>
         </where>
-        order by create_time desc
+        order by name asc,create_time desc
     </select>
 </mapper>

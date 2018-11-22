@@ -5,16 +5,17 @@ spring:
 mybatis:
   type-aliases-package: com.yzf.springboot.pojo.entity
   mapper-locations: classpath:mapper/*Mapper.xml
-mapper:
-  mappers: com.yzf.springboot.mapper
-  not-empty: false
-  identity: MYSQL
+#mapper:
+#  #通用mapper的所在接口名称 不只是包名
+#  mappers: com.yzf.springboot.**.mapper
+#  not-empty: false
+#  identity: MYSQL
 #pagehelper
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count,countSql
+#pagehelper:
+#  helperDialect: mysql
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count,countSql
 #server
 server:
   servlet:

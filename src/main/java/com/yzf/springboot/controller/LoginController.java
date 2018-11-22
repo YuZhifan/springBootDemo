@@ -30,7 +30,7 @@ public class LoginController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "user", value = "{\"code\":\"admin\",\"pwd\":\"admin\"}")
     })
-    @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object login(@RequestBody User user) throws Exception {
         if (StringUtils.isBlank(user.getCode()) || StringUtils.isBlank(user.getPwd())) {
             throw new BizException("F000", "param[code] and param[pwd] is need");
@@ -54,7 +54,7 @@ public class LoginController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "user", value = "{}")
     })
-    @RequestMapping(value = "/logout", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public Object logout(HttpServletRequest request) throws Exception {
         return renderSuccess(LoginUserHelper.cleanLoginUserSession(request));
     }
