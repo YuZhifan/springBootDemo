@@ -3,7 +3,7 @@ package com.yzf.springboot;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.yzf.springboot.admin.exception.CommonExceptionHandler;
-import com.yzf.springboot.admin.interceptror.SessionInterceptor;
+import com.yzf.springboot.admin.interceptor.SessionInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -30,11 +30,12 @@ public class MvcConfiguration extends WebMvcConfigurationSupport {
         registry.addInterceptor(getSessionInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/*.ico",
-                        "/swagger**",
                         "/error**",
+                        "/swagger**",
                         "/webjars/**",
                         "/images/**",
-                        "/v2/**");
+                        "/v2/**",
+                        "/configuration/**");
     }
 
     @Bean
