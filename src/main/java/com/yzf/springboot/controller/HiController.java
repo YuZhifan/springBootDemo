@@ -5,15 +5,22 @@ import com.yzf.springboot.pojo.entity.Hi;
 import com.yzf.springboot.service.HiService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @Api(description = "测试controller")
 @RestController
-public class HiController {
+public class HiController extends BaseController {
+
+    /**
+     * 测试从Spring Cloud Config获取的配置文件参数
+     * 如不需加载则注释掉
+     */
+    @Value("${foo}")
+    private String strGetFromSpringCloudConfig;
 
     @Autowired
     private HiService hiService;
@@ -22,13 +29,9 @@ public class HiController {
     public Object sayHi() throws Exception {
         ResultObject result = new ResultObject();
         System.out.println("HiController.sayHi");
+        System.out.println("strGetFromSpringCloudConfig:" + strGetFromSpringCloudConfig);
         List<Hi> list = hiService.sayHi();
-//        throw new BizException("sss","sssssss");
-//        throw new Exception();
-        result.setReturnData(list);
-        result.setReturnCode("S000");
-        return result;
-//        return new ResultObject();
+        return renderSuccess(list);
     }
 
 }

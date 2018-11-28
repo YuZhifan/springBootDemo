@@ -1,6 +1,15 @@
 spring:
   application:
-    name: spring-boot
+#    name: spring-boot
+    name: foo  #{application}
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: springBootDemo
+      label: master   #{label}
+      profile: development  #{profile}
+      uri: http://localhost:8888/
 
   redis:
     hostName: 127.0.0.1

@@ -18,11 +18,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@ConfigurationProperties("interceptor")
+//@ConfigurationProperties("interceptor")
 public class SessionInterceptor extends HandlerInterceptorAdapter {
 
     //todo 这里应改成可配置
-    private List<String> urlWhiteList = Arrays.asList("/login", "/user/add");
+    private List<String> urlWhiteList = Arrays.asList("/login", "/user/add", "/hi");
 
     private Logger logger = LoggerFactory.getLogger(SessionInterceptor.class);
 
